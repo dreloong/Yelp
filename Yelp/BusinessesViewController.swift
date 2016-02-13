@@ -12,29 +12,51 @@ class BusinessesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    var businesses = [Business]()
+    var businesses = [Business]() {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+
+    var term = "" {
+        didSet {
+            fetchBusinesses()
+        }
+    }
+
+    lazy var searchBar = UISearchBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        searchBar.delegate = self
+        searchBar.placeholder = "Search"
+        searchBar.tintColor = UIColor.whiteColor()
+        navigationItem.titleView = searchBar
 
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
 
-        Business.searchWithTerm(
-            "Thai",
-            completion: { (businesses: [Business]!, error: NSError!) -> Void in
-                self.businesses = businesses
-                self.tableView.reloadData()
-            }
-        )
+        term = ""
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
+    // MARK: - Helpers
+
+    func fetchBusinesses() {
+        Business.searchWithTerm(
+            term,
+            completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.businesses = businesses
+            }
+        )
+    }
+
 }
 
 extension BusinessesViewController: UITableViewDataSource {
@@ -59,5 +81,25 @@ extension BusinessesViewController: UITableViewDataSource {
 }
 
 extension BusinessesViewController: UITableViewDelegate {
+
+}
+
+extension BusinessesViewController: UISearchBarDelegate {
+
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        term = searchBar.text!
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
 
 }

@@ -96,6 +96,7 @@
                                                 <constraint firstItem="jmp-S6-EST" firstAttribute="top" secondItem="Byw-vA-zqc" secondAttribute="top" constant="8" id="gDI-d8-WyX"/>
                                                 <constraint firstItem="StK-vb-2Ge" firstAttribute="centerY" secondItem="3eH-c4-NYf" secondAttribute="centerY" id="jLU-BL-LhQ"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="cH5-qL-Y2O" secondAttribute="bottom" constant="12" id="mBj-YM-FHk"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cH5-qL-Y2O" secondAttribute="trailing" constant="8" id="oTa-LH-phv"/>
                                                 <constraint firstAttribute="trailing" secondItem="pwF-Xe-fMu" secondAttribute="trailing" constant="8" id="qJA-ka-rlt"/>
                                                 <constraint firstItem="4y1-h3-hcL" firstAttribute="leading" secondItem="XFz-xt-cMN" secondAttribute="trailing" constant="8" id="s6G-oh-hPu"/>
                                                 <constraint firstItem="3eH-c4-NYf" firstAttribute="top" secondItem="jmp-S6-EST" secondAttribute="bottom" constant="5" id="wxA-fe-MaE"/>
@@ -137,9 +138,10 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AXy-yM-fch" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="via-hQ-EI9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="via-hQ-EI9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.71764705882352942" green="0.039215686274509803" blue="0.011764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
