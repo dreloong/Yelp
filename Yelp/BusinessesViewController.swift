@@ -8,6 +8,8 @@
 
 import UIKit
 
+import SVPullToRefresh
+
 class BusinessesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -38,6 +40,7 @@ class BusinessesViewController: UIViewController {
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
+        tableView.addInfiniteScrollingWithActionHandler({self.fetchMoreBusinesses()})
 
         term = ""
     }
@@ -49,10 +52,22 @@ class BusinessesViewController: UIViewController {
     // MARK: - Helpers
 
     func fetchBusinesses() {
-        Business.searchWithTerm(
+        YelpClient.sharedInstance.search(
             term,
+            offset: 0,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
+            }
+        )
+    }
+
+    func fetchMoreBusinesses() {
+        YelpClient.sharedInstance.search(
+            term,
+            offset: self.businesses.count,
+            completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.businesses += businesses
+                self.tableView.infiniteScrollingView.stopAnimating()
             }
         )
     }
