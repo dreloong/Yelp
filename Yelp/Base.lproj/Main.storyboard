@@ -8,7 +8,7 @@
         <!--Yelp-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="BusinessesViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="BusinessesListViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -124,7 +124,14 @@
                             <constraint firstItem="unU-aQ-bNZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qDd-wE-eK6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Yelp" id="jVZ-6x-jdz"/>
+                    <navigationItem key="navigationItem" title="Yelp" id="jVZ-6x-jdz">
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="F7U-ly-0wy">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="YPT-N9-O9t" kind="modal" modalTransitionStyle="flipHorizontal" id="1TQ-Vh-lZt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="unU-aQ-bNZ" id="Xuw-dZ-kiI"/>
                     </connections>
@@ -132,6 +139,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="700" y="300"/>
+        </scene>
+        <!--Businesses Map View Controller-->
+        <scene sceneID="OlG-qh-gs4">
+            <objects>
+                <viewController id="rp8-3E-CBH" customClass="BusinessesMapViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="s47-RC-YWZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="jjm-qy-lNl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TBe-MJ-Cqf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9Xa-pm-C8m">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jjm-qy-lNl" firstAttribute="top" secondItem="9Xa-pm-C8m" secondAttribute="bottom" id="2m6-MF-v86"/>
+                            <constraint firstItem="9Xa-pm-C8m" firstAttribute="top" secondItem="s47-RC-YWZ" secondAttribute="bottom" id="Zeh-dN-whh"/>
+                            <constraint firstAttribute="trailing" secondItem="9Xa-pm-C8m" secondAttribute="trailing" id="b7h-Qx-zgj"/>
+                            <constraint firstItem="9Xa-pm-C8m" firstAttribute="leading" secondItem="TBe-MJ-Cqf" secondAttribute="leading" id="idp-gr-Nom"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PxX-OS-K9w">
+                        <barButtonItem key="rightBarButtonItem" title="List" id="lak-Sa-OaJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="AXy-yM-fch" kind="modal" modalTransitionStyle="flipHorizontal" id="0yT-Vs-ny6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="9Xa-pm-C8m" id="Htj-nR-UWF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IkJ-3G-Jnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1700" y="300"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vem-tx-Le8">
@@ -151,6 +198,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nfy-tp-DbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="200" y="300"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gRk-Ff-NWF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YPT-N9-O9t" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="wgz-6Y-B74">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.71764705880000002" green="0.039215686270000001" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rp8-3E-CBH" kind="relationship" relationship="rootViewController" id="mo4-4F-sTr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uS1-gp-yVu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1200" y="300"/>
         </scene>
     </scenes>
 </document>

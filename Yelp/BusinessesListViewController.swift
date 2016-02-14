@@ -1,5 +1,5 @@
 //
-//  BusinessesViewController.swift
+//  BusinessesListViewController.swift
 //  Yelp
 //
 //  Created by Xiaofei Long on 2/9/16.
@@ -10,21 +10,13 @@ import UIKit
 
 import SVPullToRefresh
 
-class BusinessesViewController: UIViewController {
+class BusinessesListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    var businesses = [Business]() {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
-
-    var term = "" {
-        didSet {
-            fetchBusinesses()
-        }
-    }
+    var businesses = [Business]()
+    var rightBarButtonItem: UIBarButtonItem?
+    var term = ""
 
     lazy var searchBar = UISearchBar()
 
@@ -34,7 +26,9 @@ class BusinessesViewController: UIViewController {
         searchBar.delegate = self
         searchBar.placeholder = "Search"
         searchBar.tintColor = UIColor.whiteColor()
+        searchBar.text = term
         navigationItem.titleView = searchBar
+        rightBarButtonItem = navigationItem.rightBarButtonItem
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -42,11 +36,25 @@ class BusinessesViewController: UIViewController {
         tableView.estimatedRowHeight = 120
         tableView.addInfiniteScrollingWithActionHandler({self.fetchMoreBusinesses()})
 
-        term = ""
+        if businesses.count == 0 {
+            fetchBusinesses()
+        } else {
+            tableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    // MARK: - Navigation
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let navigationController = segue.destinationViewController as! UINavigationController
+        let businessesMapViewController =
+            navigationController.topViewController as! BusinessesMapViewController
+        businessesMapViewController.businesses = self.businesses
+        businessesMapViewController.term = self.term
     }
 
     // MARK: - Helpers
@@ -57,6 +65,7 @@ class BusinessesViewController: UIViewController {
             offset: 0,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
+                self.tableView.reloadData()
             }
         )
     }
@@ -67,6 +76,7 @@ class BusinessesViewController: UIViewController {
             offset: self.businesses.count,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses += businesses
+                self.tableView.reloadData()
                 self.tableView.infiniteScrollingView.stopAnimating()
             }
         )
@@ -74,7 +84,7 @@ class BusinessesViewController: UIViewController {
 
 }
 
-extension BusinessesViewController: UITableViewDataSource {
+extension BusinessesListViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return businesses.count
@@ -95,26 +105,30 @@ extension BusinessesViewController: UITableViewDataSource {
 
 }
 
-extension BusinessesViewController: UITableViewDelegate {
+extension BusinessesListViewController: UITableViewDelegate {
 
 }
 
-extension BusinessesViewController: UISearchBarDelegate {
+extension BusinessesListViewController: UISearchBarDelegate {
 
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         searchBar.text = ""
         searchBar.resignFirstResponder()
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         term = searchBar.text!
+        fetchBusinesses()
         searchBar.showsCancelButton = false
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         searchBar.resignFirstResponder()
     }
 
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
+        navigationItem.rightBarButtonItem = nil
     }
 
 }
