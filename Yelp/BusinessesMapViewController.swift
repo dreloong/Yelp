@@ -7,6 +7,7 @@
 //
 
 import MapKit
+import MBProgressHUD
 import UIKit
 
 class BusinessesMapViewController: UIViewController {
@@ -53,10 +54,14 @@ class BusinessesMapViewController: UIViewController {
     // MARK: - Helpers
 
     func fetchBusinesses() {
+        let progressHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        progressHud.labelText = "Loading"
+
         YelpClient.sharedInstance.search(
             term,
             offset: 0,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
                 self.businesses = businesses
                 self.updateAnnotations()
             }

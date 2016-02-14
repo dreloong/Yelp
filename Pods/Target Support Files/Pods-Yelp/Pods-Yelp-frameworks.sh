@@ -86,10 +86,12 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Yelp/AFNetworking.framework"
   install_framework "Pods-Yelp/BDBOAuth1Manager.framework"
+  install_framework "Pods-Yelp/MBProgressHUD.framework"
   install_framework "Pods-Yelp/SVPullToRefresh.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Yelp/AFNetworking.framework"
   install_framework "Pods-Yelp/BDBOAuth1Manager.framework"
+  install_framework "Pods-Yelp/MBProgressHUD.framework"
   install_framework "Pods-Yelp/SVPullToRefresh.framework"
 fi
